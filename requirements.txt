@@ -1,0 +1,6 @@
+Flask
+PyPDF2
+google-generativeai
+python-docx
+python-dotenv
+matplotlib

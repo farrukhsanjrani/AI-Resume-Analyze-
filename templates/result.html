@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Analysis Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white min-h-screen font-sans p-4 md:p-8">
+
+<div class="max-w-6xl mx-auto space-y-8">
+    
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-6">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">
+                Resume Analysis Dashboard
+            </h1>
+            <p class="text-slate-400 mt-1">Gemini AI generated optimization report</p>
+        </div>
+        <a href="/" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sm font-medium px-4 py-2 rounded-xl transition-all active:scale-95">
+            <i class="fa-solid fa-arrow-left"></i> Analyze Another Resume
+        </a>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+        
+        <div class="lg:col-span-1 space-y-8">
+            <div class="bg-gradient-to-b from-indigo-900/40 to-slate-900/80 border border-indigo-500/30 p-8 rounded-2xl text-center shadow-xl shadow-indigo-500/5 relative overflow-hidden group">
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all"></div>
+                <h3 class="text-lg font-bold text-indigo-300 uppercase tracking-wider mb-4">Overall ATS Score</h3>
+                <div class="inline-flex items-center justify-center w-36 h-36 rounded-full border-4 border-indigo-500 bg-indigo-500/10 shadow-lg shadow-indigo-500/20 mb-4">
+                    <span class="text-4xl font-black tracking-tight text-white">
+                        {{ result.ats_score }}
+                    </span>
+                </div>
+                <p class="text-sm text-slate-400 px-4">
+                    Based on structure, missing skills, and industry standard keywords.
+                </p>
+            </div>
+
+            <div class="bg-slate-900/60 backdrop-blur-md border border-slate-800 p-6 rounded-2xl shadow-lg space-y-3">
+                <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
+                    <i class="fa-solid fa-file-invoice text-indigo-400"></i> Executive Summary
+                </h3>
+                <p class="text-slate-300 text-sm leading-relaxed bg-slate-950/40 p-4 rounded-xl border border-slate-800/50">
+                    {{ result.summary }}
+                </p>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2 grid md:grid-cols-2 gap-6">
+            
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-md space-y-4">
+                <h3 class="text-md font-bold text-emerald-400 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-check"></i> Identified Skills
+                </h3>
+                <div class="flex flex-wrap gap-2 max-h-52 overflow-y-auto pr-1">
+                    {% for skill in result.skills %}
+                    <span class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold px-3 py-1.5 rounded-lg">
+                        {{ skill }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-md space-y-4">
+                <h3 class="text-md font-bold text-rose-400 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-xmark"></i> Missing Skills
+                </h3>
+                <div class="flex flex-wrap gap-2 max-h-52 overflow-y-auto pr-1">
+                    {% for skill in result.missing_skills %}
+                    <span class="bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold px-3 py-1.5 rounded-lg">
+                        {{ skill }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-md space-y-3">
+                <h3 class="text-md font-bold text-cyan-400 flex items-center gap-2">
+                    <i class="fa-solid fa-bolt"></i> Key Strengths
+                </h3>
+                <ul class="space-y-2.5 text-sm text-slate-300 max-h-56 overflow-y-auto pr-1">
+                    {% for item in result.strengths %}
+                    <li class="flex items-start gap-2 bg-slate-950/30 p-2.5 rounded-xl border border-slate-800/40">
+                        <i class="fa-solid fa-plus text-cyan-500 mt-1 text-xs"></i>
+                        <span>{{ item }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-md space-y-3">
+                <h3 class="text-md font-bold text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Areas of Improvement
+                </h3>
+                <ul class="space-y-2.5 text-sm text-slate-300 max-h-56 overflow-y-auto pr-1">
+                    {% for item in result.weaknesses %}
+                    <li class="flex items-start gap-2 bg-slate-950/30 p-2.5 rounded-xl border border-slate-800/40">
+                        <i class="fa-solid fa-minus text-amber-500 mt-1 text-xs"></i>
+                        <span>{{ item }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="md:col-span-2 bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border border-slate-800 p-6 rounded-2xl shadow-md space-y-4">
+                <h3 class="text-md font-bold text-indigo-400 flex items-center gap-2">
+                    <i class="fa-solid fa-briefcase"></i> Recommended Job Roles
+                </h3>
+                <div class="grid sm:grid-cols-2 gap-3">
+                    {% for job in result.job_recommendations %}
+                    <div class="flex items-center gap-3 bg-slate-900/90 border border-slate-800 px-4 py-3 rounded-xl hover:border-indigo-500/40 transition-colors">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-sm">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <span class="text-sm font-medium text-slate-200">{{ job }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
