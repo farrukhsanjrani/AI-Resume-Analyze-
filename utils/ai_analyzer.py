@@ -7,10 +7,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # API Key check
-api_key = os.getenv("AIzaSyBwjRRXew7IEiwJ3J_P6uhIKkQb9YY2e-4")
+api_key = os.getenv("AIzaSyAxUFFkVkwIxUyirgi5bLL0TfZo4DRRQCw")
 if not api_key:
     # Agar .env file na chal rahi ho to fallback key
-    api_key = "AIzaSyBwjRRXew7IEiwJ3J_P6uhIKkQb9YY2e-4"
+    api_key = "AIzaSyAxUFFkVkwIxUyirgi5bLL0TfZo4DRRQCw"
 
 # Bilkul simple configuration bina kisi extra options ke
 genai.configure(api_key=api_key)
